@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e -x
 
 # Probably don't want to change the stuff below this line
