@@ -5,24 +5,16 @@ set -e -x
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 
-cat << EOF > /etc/yum.repos.d/mercurial.selenic.com.repo
-[mercurial.selenic.com]
-name=mercurial.selenic.com
-baseurl=https://www.mercurial-scm.org/release/centos5
-enabled=1
-# Temporary until we get a serious signing scheme in place,
-# check https://www.mercurial-scm.org/wiki/Download again
-gpgcheck=0
-EOF
-
-yum install -q -y mercurial
+# Install hg
+export TEMP_BIN=/opt/python/cp27-cp27m/bin
+${TEMP_BIN}/pip install mercurial
 
 if [ -d /io/yt ] ; then
    cd /io/yt
-   hg pull
-   hg update
+   ${TEMP_BIN}/hg pull
+   ${TEMP_BIN}/hg update
 else
-   hg clone https://bitbucket.org/yt_analysis/yt /io/yt -b yt
+   ${TEMP_BIN}/hg clone https://bitbucket.org/yt_analysis/yt /io/yt -b yt
    cd /io/yt
 fi
 
