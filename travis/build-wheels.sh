@@ -18,6 +18,8 @@ else
    cd /io/yt
 fi
 
+${TEMP_BIN}/hg update -C yt-3.3.0
+
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
     if [[ ${PYBIN} != *"26"* ]] && [[ ${PYBIN} != *"33"* ]]; then
