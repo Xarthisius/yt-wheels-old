@@ -21,19 +21,14 @@ fi
 ${TEMP_BIN}/hg update -C yt-3.3.0
 
 # Compile wheels
-for PYBIN in /opt/python/*/bin; do
-    if [[ ${PYBIN} != *"26"* ]] && [[ ${PYBIN} != *"33"* ]]; then
-        echo "building for ${PYBIN}"
-        ${PYBIN}/pip install -f $MANYLINUX_URL "numpy==1.9.3" "Cython>=0.24"
-        ${PYBIN}/pip wheel --no-deps . -w wheelhouse/
-    else
-        echo "skipping ${PYBIN}"
-    fi
-done
-
+export PYBIN=/opt/python/${PYVER}/bin
+echo "building for ${PYBIN}"
+${PYBIN}/pip install -f $MANYLINUX_URL "numpy==1.9.3" "Cython>=0.24"
+${PYBIN}/pip wheel --no-deps . -w wheelhouse/
 
 for whl in wheelhouse/yt*.whl; do
-    if [[ ${whl} == *"yt"* ]]; then
-        auditwheel repair $whl -w /io/wheelhouse/
-    fi
+   auditwheel repair $whl -w /io/wheelhouse/
 done
+
+${PYBIN}/pip install yt --no-index -f /io/wheelhouse
+cd $HOME; ${PYBIN}/python -c 'import yt; print(yt.__version__)'
