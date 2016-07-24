@@ -18,7 +18,7 @@ else
    cd /io/yt
 fi
 
-${TEMP_BIN}/hg update -C yt-3.3.0
+${TEMP_BIN}/hg update -C yt-3.3.1
 
 # Compile wheels
 export PYBIN=/opt/python/${PYVER}/bin
