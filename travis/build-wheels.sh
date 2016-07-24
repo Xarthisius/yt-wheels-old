@@ -30,5 +30,6 @@ for whl in wheelhouse/yt*.whl; do
    auditwheel repair $whl -w /io/wheelhouse/
 done
 
+${PYBIN}/pip install -f $MANYLINUX_URL matplotlib sympy "setuptools>=19.6" "IPython"
 ${PYBIN}/pip install yt --no-index -f /io/wheelhouse
 cd $HOME; ${PYBIN}/python -c 'import yt; print(yt.__version__)'
