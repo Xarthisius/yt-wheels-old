@@ -1,37 +1,25 @@
 notifications:
   email: false
-
 sudo: required
-
 services:
-   - docker
-
+- docker
 env:
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp34-cp34m
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp35-cp35m
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp27-cp27m
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp27-cp27mu
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp34-cp34m PRE_CMD=linux32
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp35-cp35m PRE_CMD=linux32
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp27-cp27m PRE_CMD=linux32
-   - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp27-cp27mu PRE_CMD=linux32
-
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp34-cp34m
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp35-cp35m
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp27-cp27m
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64 PYVER=cp27-cp27mu
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp34-cp34m PRE_CMD=linux32
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp35-cp35m PRE_CMD=linux32
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp27-cp27m PRE_CMD=linux32
+- DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PYVER=cp27-cp27mu PRE_CMD=linux32
 install:
-  - docker pull $DOCKER_IMAGE
-
+- docker pull $DOCKER_IMAGE
 script:
-  - export PYVER=${PYVER}
-  - docker run -e "PYVER=${PYVER}" --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
-  - ls wheelhouse/
-
+- export PYVER=${PYVER}
+- docker run -e "PYVER=${PYVER}" --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
+- ls wheelhouse/
 before_deploy:
-  - cd wheelhouse
-
-#deploy:
-#  provider: cloudfiles
-#  username: travis-worker
-#  api_key:
-#      secure: ""
-#  region: ORD
-#  container: wheels
-#  skip_cleanup: true
+- cd wheelhouse
+deploy:
+  password:
+    secure: AA8CIqMnnoZWVMBRAZWYulLqRcjan9AHBPh/b2Jg+98OwCjZ73PbXIIzyXVS6gwWlATjdos41efoiRFOsyOj92R/MtvhurRy7WSCYwWAWwXW+lIvQoR2DYc64DRqnKi57no7X4cDmyq6o6bB/KJzvuliz/lDSpTVGA7V3CK4LQLCR+OuIUw3xhfgWfW8AxNM2i81Pb6zkBoqFRNXktSz+wsh786efiLnbLA7RNFLP2bqGB6mYjE7a0XxgQVJm3SIuY40ruaBRWpIspjLtTGe4H2JUTM/7tebSB1cAeIPT7SBjIGq+ITGz8xiBCAXgEn6/nk9VElVXOLdxgM146W47N50JY/kt+ZtrISZj0OHqmtLMGVB3FkFBOoWpxgkLd0+2TVPZ84/1Z7ZYNHtteyJ8DZiYbcJOBu4XRROWs1529xZa0opWlajjQmFT30ffo9x4MNXSFj+73mPElgGK6FmkxL3NsFrf/YUc3RQ33jx+fdaknG0onZCAUfojFdsqZvUZatdUDYZ4HT/6t9uSNzXkG/CLFeCCqC8pOV8egKB+CxNWDIo8AnkEQEDo8ueHQDuITooomnLnMuha4U+p0D4YOK+XFwvnAhhmMm8YKXbo4Z8JVKGnJDzar8eN56gLrCp+bJvZdMBGX78f09X/eYStdngaZDZ/t0dkY3KVTZ5Z5c=
